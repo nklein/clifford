@@ -26,16 +26,26 @@
                              (:file "add" :depends-on ("package"
                                                        "info"))
                              (:file "sub" :depends-on ("package"
-                                                       "info"))
+                                                       "info"
+                                                       "add"))
                              (:file "mul" :depends-on ("package"
                                                        "info"))
+                             (:file "predicates" :depends-on ("package"
+                                                              "info"))
+                             (:file "accessors" :depends-on ("package"
+                                                             "info"))
                              (:file "create-info" :depends-on ("package"
                                                                "info"
                                                                "vbasis"
                                                                "basis"))
                              (:file "define" :depends-on ("package"
                                                           "create-info"
-                                                          "struct"))))))
+                                                          "struct"
+                                                          "add"
+                                                          "sub"
+                                                          "mul"
+                                                          "predicates"
+                                                          "accessors"))))))
 
 (asdf:defsystem #:clifford-tests
   :description "Tests for the Clifford algebra library."
@@ -46,13 +56,18 @@
   :components ((:module "src"
                 :components ((:file "package-t")
                              (:file "def-errors-t" :depends-on ("package-t"))
-                             (:file "add-t" :depends-on ("package-t"
-                                                         "define-t"))
-                             (:file "sub-t" :depends-on ("package-t"
-                                                         "define-t"))
-                             (:file "mul-t" :depends-on ("package-t"
-                                                         "define-t"))
-                             (:file "define-t" :depends-on ("package-t"))))))
+                             (:file "add-t"
+                                    :depends-on ("package-t" "define-t"))
+                             (:file "sub-t"
+                                    :depends-on ("package-t" "define-t"))
+                             (:file "mul-t"
+                                    :depends-on ("package-t" "define-t"))
+                             (:file "define-t"
+                                    :depends-on ("package-t"))
+                             (:file "predicates-t"
+                                    :depends-on ("package-t" "define-t"))
+                             (:file "accessors-t"
+                                    :depends-on ("package-t" "define-t"))))))
 
 (defmethod asdf:perform ((op asdf:test-op)
                          (system (eql (asdf:find-system :clifford))))

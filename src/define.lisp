@@ -7,4 +7,6 @@
        ,@(create-addition-functions info)
        ,@(create-subtraction-functions info)
        ,@(create-multiplication-functions info)
+       ,@(create-predicate-functions info)
+       ,@(create-accessors-functions info)
        ',name)))

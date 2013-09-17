@@ -119,3 +119,23 @@ We can also negate and multiply multivectors:
     (* e e*) => #S(R11 :ONE 0.0 :E 0.0 :E* 0.0 :EE* 1.0)
     (* e* e) => #S(R11 :ONE 0.0 :E 0.0 :E* 0.0 :EE* -1.0)
     (- (* e* e)) => #S(R11 :ONE 0.0 :E 0.0 :E* 0.0 :EE* 1.0)
+
+We can use various predicates, comparisons, and accessors with
+multivectors:
+
+    (zerop (make-r11 0.0 0.0)) => T
+    (zerop e) => NIL
+    (= e e)   => T
+    (= e e*)  => NIL
+    (/= e e)  => NIL
+    (/= e e*) => T
+    (realpart (+ 2 e)) => 2
+    (imagpart (+ 2 e)) => #S(R11 :ONE 0.0 :E 1.0 :E* 0.0 :EE* 0.0)
+
+### Still to be done
+
+In the near future, I will add: `GRADE-INVERSION`, `REVERSION`,
+`CONJUGATE`, `DOT`, and `WEDGE`.
+
+Maybe someday I will add `EXPT`, `LOG`, `EXP`, trig functions,
+hyperbolic trig functions, etc.
