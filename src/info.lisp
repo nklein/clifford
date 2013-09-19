@@ -9,6 +9,7 @@
   vector-basis
   full-basis
   basis-multiplication-table
+  basis-reversion-table
   constructor
   keywords
   accessors

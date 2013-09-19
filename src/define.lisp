@@ -9,4 +9,5 @@
        ,@(create-multiplication-functions info)
        ,@(create-predicate-functions info)
        ,@(create-accessors-functions info)
+       ,@(create-involution-functions info)
        ',name)))

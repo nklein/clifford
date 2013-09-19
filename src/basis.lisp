@@ -1,5 +1,10 @@
 (in-package #:clifford)
 
+(defstruct basis-vector
+  grade
+  name
+  bits)
+
 (defun %subset (k list)
   (iter (for i from 0)
         (for v in list)
@@ -12,26 +17,29 @@
                      (mapcar #'symbol-name subset)) package)
       (intern (symbol-name 'one) package)))
 
-(defun %full-basis (vector-basis package)
-  (iter (for k from 0 below (expt 2 (length vector-basis)))
-        (collecting (%sym-from-subset (%subset k vector-basis) package))))
+(defun %full-basis-info (vector-basis package)
+  (stable-sort (iter (for k from 0 below (expt 2 (length vector-basis)))
+                     (for grade = (logcount k))
+                     (for subset = (%subset k vector-basis))
+                     (collect (make-basis-vector :grade grade
+                                                 :name (%sym-from-subset
+                                                        subset package)
+                                                 :bits k)))
+               #'< :key #'basis-vector-grade))
 
-(defun %calculate-clifford-basis (name package vector-basis)
-  (let ((clifford-basis (%full-basis vector-basis package)))
 
-    (unless (equalp clifford-basis (remove-duplicates clifford-basis))
+(defun calculate-full-basis (info)
+  (let* ((full-basis (%full-basis-info (vector-basis info) (package info))))
+
+    (unless (equalp full-basis (remove-duplicates full-basis
+                                                  :key #'basis-vector-name))
       (error 'clifford-bad-basis-specification
-             :algebra-name name
-             :basis-spec vector-basis
+             :algebra-name (name info)
+             :basis-spec (vector-basis info)
              :reason
              "Basis elements cannot be concatenation of other elements"))
 
-    (sort clifford-basis #'%basis< :key #'symbol-name)))
-
-(defun calculate-full-basis (info)
-  (setf (full-basis info) (%calculate-clifford-basis (name info)
-                                                     (package info)
-                                                     (vector-basis info))))
+    (setf (full-basis info) full-basis)))
 
 (defun %vec (len index &optional (value 1))
   (iter (for x from 0 below len)
@@ -139,11 +147,15 @@
 (defun %cl*-from-inner-product (inner-product vector-basis)
   (let* ((dim (length vector-basis))
          (len (expt 2 dim))
-         (ret (make-array (list len len) :initial-element nil)))
-    (dotimes (a len ret)
+         (mul (make-array (list len len) :initial-element nil))
+         (rev (make-array (list len) :initial-element nil)))
+    (dotimes (a len (values mul rev))
       (dotimes (b len)
-        (setf (aref ret a b) (%basis-multiply inner-product len dim
-                                              (%bits-set a) (%bits-set b)))))))
+        (setf (aref mul a b) (%basis-multiply inner-product len dim
+                                              (%bits-set a) (%bits-set b))))
+      (setf (aref rev a) (apply #'%basis-multiply
+                                inner-product len dim
+                                (mapcar #'list (nreverse (%bits-set a))))))))
 
 (defun %cl*-from-quadratic-form (quadratic-form vector-basis)
   (flet ((dot (a b)
@@ -175,5 +187,7 @@
          (%cl*-from-quadratic-form #'l2 vector-basis))))))
 
 (defun calculate-basis-multiplication-table (info)
-  (setf (basis-multiplication-table info)
-        (%calculate-basis-multiplication-table info)))
+  (multiple-value-bind (mul-table reversion-table)
+      (%calculate-basis-multiplication-table info)
+    (setf (basis-multiplication-table info) mul-table
+          (basis-reversion-table info) reversion-table)))

@@ -8,20 +8,9 @@
   `(defmethod unary-* ((x ,(name info)))
      x))
 
-(defun %calculate-reverse-lookup (info)
-  (let* ((package (package info))
-         (vector-basis (vector-basis info))
-         (full-basis (full-basis info))
-         (res (copy-seq full-basis)))
-    (dotimes (k (length res) res)
-      (setf (nth k res)
-            (position (%sym-from-subset (%subset k vector-basis) package)
-                      full-basis)))))
-
 (defun %binary-multiplication (info)
   (let ((table (basis-multiplication-table info))
-        (accessors (accessors info))
-        (lut (%calculate-reverse-lookup info)))
+        (accessors (accessors info)))
     (labels ((collect-terms (index)
                (iter (for a from 0 below (array-dimension table 0))
                      (appending
@@ -46,8 +35,8 @@
       `(defmethod binary-* ((x ,(name info)) (y ,(name info)))
          (,(constructor info)
            ,@(iter (for k in (keywords info))
-                   (for i from 0)
-                   (for s = (get-term (nth i lut)))
+                   (for v in (full-basis info))
+                   (for s = (get-term (basis-vector-bits v)))
                    (when s
                      (collect k)
                      (collect s))))))))

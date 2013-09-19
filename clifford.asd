@@ -3,7 +3,7 @@
 (asdf:defsystem #:clifford
   :description "Clifford algebra library"
   :author "Patrick Stein <pat@nklein.com>"
-  :version "0.1.20130916"
+  :version "0.2.20130918"
   :license "unlicense"
   :depends-on (:conduit-packages :cl-generic-arithmetic :iterate :anaphora)
   :components ((:static-file "README.md")
@@ -23,17 +23,25 @@
                                                          "vbasis"))
                              (:file "struct" :depends-on ("package"
                                                           "info"))
+                             (:file "iter" :depends-on ("package"
+                                                        "info"))
                              (:file "add" :depends-on ("package"
-                                                       "info"))
+                                                       "info"
+                                                       "iter"))
                              (:file "sub" :depends-on ("package"
                                                        "info"
-                                                       "add"))
+                                                       "iter"))
                              (:file "mul" :depends-on ("package"
-                                                       "info"))
+                                                       "info"
+                                                       "iter"))
                              (:file "predicates" :depends-on ("package"
                                                               "info"))
                              (:file "accessors" :depends-on ("package"
-                                                             "info"))
+                                                             "info"
+                                                             "iter"))
+                             (:file "involutions" :depends-on ("package"
+                                                               "info"
+                                                               "iter"))
                              (:file "create-info" :depends-on ("package"
                                                                "info"
                                                                "vbasis"
@@ -45,12 +53,13 @@
                                                           "sub"
                                                           "mul"
                                                           "predicates"
-                                                          "accessors"))))))
+                                                          "accessors"
+                                                          "involutions"))))))
 
 (asdf:defsystem #:clifford-tests
   :description "Tests for the Clifford algebra library."
   :author "Patrick Stein <pat@nklein.com>"
-  :version "0.1.20130916"
+  :version "0.2.20130918"
   :license "unlicense"
   :depends-on (#:clifford #:nst)
   :components ((:module "src"
@@ -67,6 +76,8 @@
                              (:file "predicates-t"
                                     :depends-on ("package-t" "define-t"))
                              (:file "accessors-t"
+                                    :depends-on ("package-t" "define-t"))
+                             (:file "involutions-t"
                                     :depends-on ("package-t" "define-t"))))))
 
 (defmethod asdf:perform ((op asdf:test-op)

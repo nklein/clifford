@@ -37,8 +37,8 @@
     (setf (constructor info) (%calculate-constructor name struct-options))))
 
 (defun calculate-keywords (info)
-  (flet ((to-keyword (sym)
-           (intern (symbol-name sym) :keyword)))
+  (flet ((to-keyword (vec)
+           (intern (symbol-name (basis-vector-name vec)) :keyword)))
     (setf (keywords info) (mapcar #'to-keyword (full-basis info)))))
 
 (defun %calculate-conc-name (name struct-options)
@@ -60,7 +60,9 @@
          (conc-name (%calculate-conc-name name struct-options))
          (package (package info)))
     (flet ((aname (element)
-             (intern (concatenate 'string conc-name (symbol-name element))
+             (intern (concatenate 'string
+                                  conc-name
+                                  (symbol-name (basis-vector-name element)))
                      package)))
       (setf (accessors info) (mapcar #'aname (full-basis info))))))
 

@@ -13,7 +13,11 @@
            #:clifford-overspecified-algebra-name
            #:clifford-overspecified-quadratic-form
            #:clifford-overspecified-inner-product)
-  (:export #:defcliff))
+  (:export #:defcliff)
+  (:export #:grade
+           #:evenpart)
+  (:export #:grade-inversion
+           #:reversion))
 
 (defpackage #:clifford-user
   (:use #:clifford))

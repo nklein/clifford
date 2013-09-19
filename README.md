@@ -84,7 +84,7 @@ If neither the `:quadratic-form` nor the `:inner-product` are
 specified, then the default is for a positive-definite, orthonormal
 basis.
 
-### Arithmetic with Clifford algebras
+### Defining Clifford algebras, vectors, and multivectors
 
 For the examples in this section, we will use the following Clifford
 algebra specification to declare a Clifford algebra with
@@ -92,7 +92,7 @@ algebra specification to declare a Clifford algebra with
 
     (defcliff r11 (e e*)
       (:struct-options
-        :conc-name
+        (:conc-name c-)
         (:constructor %make-r11)
         (:constructor make-r11 (e e* &key (one 0.0) (ee* 0.0))))
       (:scalar-type single-float)
@@ -103,6 +103,16 @@ We can now define several multivectors to work with:
     (defparameter e   (make-r11 1.0 0.0))
     (defparameter e*  (make-r11 0.0 1.0))
     (defparameter ee* (make-r11 0.0 0.0 :ee* 1.0))
+    (defparameter c1234 (make-r11 2.0 3.0 :one 1.0 :ee* 4.0))
+
+We can access the components with normal struct accessors.  In this
+case since we used `C-` for the `:conc-name` in the `:struct-options`,
+we can do:
+
+    (c-e ee*) => 0.0
+    (c-ee* ee*) => 1.0
+
+### Arithmetic with Clifford multivectors
 
 Assuming we're in package `:clifford-user` or in package
 `:common-lisp/cl-generic-arithmetic-user`, then we can add and
@@ -120,8 +130,9 @@ We can also negate and multiply multivectors:
     (* e* e) => #S(R11 :ONE 0.0 :E 0.0 :E* 0.0 :EE* -1.0)
     (- (* e* e)) => #S(R11 :ONE 0.0 :E 0.0 :E* 0.0 :EE* 1.0)
 
-We can use various predicates, comparisons, and accessors with
-multivectors:
+### Comparisons and special accessors
+
+We can make various comparisons with Clifford multivectors:
 
     (zerop (make-r11 0.0 0.0)) => T
     (zerop e) => NIL
@@ -129,13 +140,28 @@ multivectors:
     (= e e*)  => NIL
     (/= e e)  => NIL
     (/= e e*) => T
+
+We can extract particular portions of the Clifford multivector:
+
     (realpart (+ 2 e)) => 2
     (imagpart (+ 2 e)) => #S(R11 :ONE 0.0 :E 1.0 :E* 0.0 :EE* 0.0)
+    (grade c1234 0) => #S(R11 :ONE 1.0 :E 2.0 :E* 3.0 :EE* 0.0)
+    (grade c1234 1) => #S(R11 :ONE 0.0 :E 2.0 :E* 3.0 :EE* 0.0)
+    (grade c1234 2) => #S(R11 :ONE 0.0 :E 2.0 :E* 3.0 :EE* 4.0)
+    (evenpart c1234) => #S(R11 :ONE 1.0 :E 0.0 :E* 0.0 :EE* 4.0)
+
+### Involutions
+
+We can perform grade inversion, reversion, and the Clifford conjugate:
+
+    (grade-inversion c1234) => #S(R11 :ONE 1.0 :E -2.0 :E* -3.0 :EE* 4.0)
+    (reversion c1234) => #S(R11 :ONE 5.0 :E 2.0 :E* 3.0 :EE* -4.0)
+    (conjugate c1234) => #S(R11 :ONE 5.0 :E -2.0 :E* -3.0 :EE* -4.0)
 
 ### Still to be done
 
-In the near future, I will add: `GRADE-INVERSION`, `REVERSION`,
-`CONJUGATE`, `DOT`, and `WEDGE`.
+In the near future, I will add: `DOT`, `WEDGE`, `HODGE-DUAL`,
+`LEFT-CONTRACTION`, and `RIGHT-CONTRACTION`.
 
 Maybe someday I will add `EXPT`, `LOG`, `EXP`, trig functions,
 hyperbolic trig functions, etc.

@@ -11,14 +11,6 @@
   (and (symbolp sym)
        (not (keywordp sym))))
 
-(defun %basis< (a b)
-  (cond
-    ((string= a "ONE") t)
-    ((string= b "ONE") nil)
-    ((< (length a) (length b)) t)
-    (t (and (= (length a) (length b))
-            (string< a b)))))
-
 (defun validate-vector-basis (info)
   (let* ((package (package info))
          (vector-basis (%symbolify (vector-basis info) package)))
@@ -40,5 +32,4 @@
       (when (find :one vector-basis :test #'string= :key #'symbol-name)
         (err "Vector basis cannot contain element \"ONE\""))
 
-      (setf (vector-basis info) (sort vector-basis #'%basis<
-                                      :key #'symbol-name)))))
+      (setf (vector-basis info) vector-basis))))

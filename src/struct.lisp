@@ -10,7 +10,8 @@
          (zero (scalar-zero info))
          (slot-type (scalar-type info)))
 
-    (flet ((slot (name)
-             `(,name ,zero :type ,slot-type :read-only t)))
+    (flet ((slot (v)
+             (let ((name (basis-vector-name v)))
+               `(,name ,zero :type ,slot-type :read-only t))))
       `(defstruct ,name-and-options
          ,@(mapcar #'slot (full-basis info))))))
