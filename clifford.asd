@@ -42,6 +42,8 @@
                              (:file "involutions" :depends-on ("package"
                                                                "info"
                                                                "iter"))
+                             (:file "product" :depends-on ("package"
+                                                           "info"))
                              (:file "create-info" :depends-on ("package"
                                                                "info"
                                                                "vbasis"
@@ -78,6 +80,8 @@
                              (:file "accessors-t"
                                     :depends-on ("package-t" "define-t"))
                              (:file "involutions-t"
+                                    :depends-on ("package-t" "define-t"))
+                             (:file "product-t"
                                     :depends-on ("package-t" "define-t"))))))
 
 (defmethod asdf:perform ((op asdf:test-op)

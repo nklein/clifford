@@ -10,4 +10,5 @@
        ,@(create-predicate-functions info)
        ,@(create-accessors-functions info)
        ,@(create-involution-functions info)
+       ,@(create-product-functions info)
        ',name)))

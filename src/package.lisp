@@ -17,7 +17,9 @@
   (:export #:grade
            #:evenpart)
   (:export #:grade-inversion
-           #:reversion))
+           #:reversion)
+  (:export #:dot
+           #:wedge))
 
 (defpackage #:clifford-user
   (:use #:clifford))

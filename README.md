@@ -155,8 +155,8 @@ We can extract particular portions of the Clifford multivector:
 We can perform grade inversion, reversion, and the Clifford conjugate:
 
     (grade-inversion c1234) => #S(R11 :ONE 1.0 :E -2.0 :E* -3.0 :EE* 4.0)
-    (reversion c1234) => #S(R11 :ONE 5.0 :E 2.0 :E* 3.0 :EE* -4.0)
-    (conjugate c1234) => #S(R11 :ONE 5.0 :E -2.0 :E* -3.0 :EE* -4.0)
+    (reversion c1234) => #S(R11 :ONE 9.0 :E 2.0 :E* 3.0 :EE* -4.0)
+    (conjugate c1234) => #S(R11 :ONE 9.0 :E -2.0 :E* -3.0 :EE* -4.0)
 
 ### Still to be done
 
