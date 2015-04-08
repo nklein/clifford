@@ -145,9 +145,9 @@ We can extract particular portions of the Clifford multivector:
 
     (realpart (+ 2 e)) => 2
     (imagpart (+ 2 e)) => #S(R11 :ONE 0.0 :E 1.0 :E* 0.0 :EE* 0.0)
-    (grade c1234 0) => #S(R11 :ONE 1.0 :E 2.0 :E* 3.0 :EE* 0.0)
-    (grade c1234 1) => #S(R11 :ONE 0.0 :E 2.0 :E* 3.0 :EE* 0.0)
-    (grade c1234 2) => #S(R11 :ONE 0.0 :E 2.0 :E* 3.0 :EE* 4.0)
+    (grade c1234 0)  => #S(R11 :ONE 1.0 :E 0.0 :E* 0.0 :EE* 0.0)
+    (grade c1234 1)  => #S(R11 :ONE 0.0 :E 2.0 :E* 3.0 :EE* 0.0)
+    (grade c1234 2)  => #S(R11 :ONE 0.0 :E 0.0 :E* 0.0 :EE* 4.0)
     (evenpart c1234) => #S(R11 :ONE 1.0 :E 0.0 :E* 0.0 :EE* 4.0)
 
 ### Involutions
