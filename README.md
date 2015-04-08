@@ -158,9 +158,17 @@ We can perform grade inversion, reversion, and the Clifford conjugate:
     (reversion c1234) => #S(R11 :ONE 9.0 :E 2.0 :E* 3.0 :EE* -4.0)
     (conjugate c1234) => #S(R11 :ONE 9.0 :E -2.0 :E* -3.0 :EE* -4.0)
 
+### Geometric Operations
+
+You can calculate the dot product or wedge product of two elements of
+a Clifford algebra:
+
+    (dot e ee*)    => #S(R11 :ONE 0.0 :E 1.0 :E* 0.0 :EE* 0.0)
+    (wedge e* ee*) => #S(R11 :ONE 1.0 :E 0.0 :E* 0.0 :EE* 0.0)
+
 ### Still to be done
 
-In the near future, I will add: `DOT`, `WEDGE`, `HODGE-DUAL`,
+In the near future, I will add: `HODGE-DUAL`,
 `LEFT-CONTRACTION`, and `RIGHT-CONTRACTION`.
 
 Maybe someday I will add `EXPT`, `LOG`, `EXP`, trig functions,

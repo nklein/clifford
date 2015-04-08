@@ -5,11 +5,11 @@
 
 (defun %dot (info)
   `(defmethod dot ((x ,(name info)) (y ,(name info)))
-     (* 1/2 (+ (* x y) (* y x)))))
+     (* ,(coerce 1/2 (scalar-type info)) (+ (* x y) (* y x)))))
 
 (defun %wedge (info)
   `(defmethod wedge ((x ,(name info)) (y ,(name info)))
-     (* 1/2 (- (* x y) (* y x)))))
+     (* ,(coerce 1/2 (scalar-type info)) (- (* x y) (* y x)))))
 
 (defun create-product-functions (info)
   `(,(%dot info)
