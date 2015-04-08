@@ -15,7 +15,8 @@
            #:clifford-overspecified-inner-product)
   (:export #:defcliff)
   (:export #:grade
-           #:evenpart)
+           #:evenpart
+           #:oddpart)
   (:export #:grade-inversion
            #:reversion)
   (:export #:dot

@@ -2,6 +2,7 @@
 
 (defgeneric grade (x grade))
 (defgeneric evenpart (x))
+(defgeneric oddpart (x))
 
 (defun %realpart (info)
   `(defmethod realpart ((x ,(name info)))
@@ -36,8 +37,19 @@
                  (collect k)
                  (collect `(,a x)))))))
 
+(defun %oddpart (info)
+  `(defmethod oddpart ((x ,(name info)))
+     (,(constructor info)
+       ,@(iter (for v in (full-basis info))
+               (for k in (keywords info))
+               (for a in (accessors info))
+               (when (oddp (basis-vector-grade v))
+                 (collect k)
+                 (collect `(,a x)))))))
+
 (defun create-accessors-functions (info)
   `(,(%realpart info)
     ,(%imagpart info)
     ,(%grade info)
-    ,(%evenpart info)))
+    ,(%evenpart info)
+    ,(%oddpart info)))
