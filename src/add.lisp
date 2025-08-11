@@ -1,7 +1,5 @@
 (in-package #:clifford)
 
-(generic-cl.arithmetic:+)
-
 (defun %binary-addition (info)
   `(defmethod add ((x ,(name info)) (y ,(name info)))
      (,(constructor info)

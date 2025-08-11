@@ -4,6 +4,7 @@
   (let ((info (create-algebra-info name vector-basis options)))
     `(progn
        ,(create-struct info)
+       ,@(create-printer-functions info)
        ,@(create-addition-functions info)
        ,@(create-subtraction-functions info)
        ,@(create-multiplication-functions info)

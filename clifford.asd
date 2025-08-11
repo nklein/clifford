@@ -24,6 +24,8 @@
                                                          "vbasis"))
                              (:file "struct" :depends-on ("package"
                                                           "info"))
+                             (:file "printer" :depends-on ("package"
+                                                           "info"))
                              (:file "iter" :depends-on ("package"
                                                         "info"))
                              (:file "add" :depends-on ("package"
