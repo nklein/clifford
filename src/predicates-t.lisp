@@ -1,4 +1,4 @@
-(in-package #:clifford-tests)
+(in-package #:clifford/test)
 
 (nst:def-test-group predicates-tests ()
   (nst:def-test can-zerop (:values :true (:not :true) (:not :true))

@@ -1,4 +1,4 @@
-(in-package #:clifford-tests)
+(in-package #:clifford/test)
 
 (nst:def-test-group subtraction-tests ()
   (nst:def-test can-subtract-r2 (:equalp (make-r2 :one 1 :x 0 :y -1 :xy -2))

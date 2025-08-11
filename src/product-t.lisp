@@ -1,4 +1,4 @@
-(in-package #:clifford-tests)
+(in-package #:clifford/test)
 
 (nst:def-test-group product-tests ()
   (nst:def-test dot-product-a-a

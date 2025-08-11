@@ -1,4 +1,4 @@
-(in-package #:clifford-tests)
+(in-package #:clifford/test)
 
 (nst:def-test-group involution-tests ()
   (nst:def-test can-grade-inversion

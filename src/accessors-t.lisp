@@ -1,4 +1,4 @@
-(in-package #:clifford-tests)
+(in-package #:clifford/test)
 
 (nst:def-test-group accessor-tests ()
   (nst:def-test can-realpart (:equal 1)

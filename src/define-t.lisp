@@ -1,4 +1,4 @@
-(in-package #:clifford-tests)
+(in-package #:clifford/test)
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defcliff r2 (x y)))

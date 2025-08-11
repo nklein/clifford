@@ -58,7 +58,7 @@
   (let* ((name (name info))
          (struct-options (option* (options info) :struct-options))
          (conc-name (%calculate-conc-name name struct-options))
-         (package (package info)))
+         (package (algebra-info-package info)))
     (flet ((aname (element)
              (intern (concatenate 'string
                                   conc-name
@@ -69,7 +69,7 @@
 (defun create-algebra-info (name vector-basis options)
   (let* ((scalar-type (option options :scalar-type 'real))
          (scalar-zero (option options :scalar-zero (coerce 0 scalar-type)))
-         (info (make-algebra-info :package (symbol-package name)
+         (info (make-algebra-info :algebra-info-package (symbol-package name)
                                  :name name
                                  :vector-basis vector-basis
                                  :scalar-zero scalar-zero

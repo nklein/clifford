@@ -29,7 +29,7 @@
 
 
 (defun calculate-full-basis (info)
-  (let* ((full-basis (%full-basis-info (vector-basis info) (package info))))
+  (let* ((full-basis (%full-basis-info (vector-basis info) (algebra-info-package info))))
 
     (unless (equalp full-basis (remove-duplicates full-basis
                                                   :key #'basis-vector-name))

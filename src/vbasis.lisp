@@ -12,7 +12,7 @@
        (not (keywordp sym))))
 
 (defun validate-vector-basis (info)
-  (let* ((package (package info))
+  (let* ((package (algebra-info-package info))
          (vector-basis (%symbolify (vector-basis info) package)))
     (flet ((err (reason)
              (error 'clifford-bad-basis-specification

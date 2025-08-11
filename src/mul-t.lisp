@@ -1,4 +1,4 @@
-(in-package #:clifford-tests)
+(in-package #:clifford/test)
 
 (nst:def-test-group multiplication-tests ()
   (nst:def-test can-mul-r2 (:equalp (make-r2 :one -2 :x -2))

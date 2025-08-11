@@ -1,4 +1,4 @@
-(in-package #:clifford-tests)
+(in-package #:clifford/test)
 
 (nst:def-test-group addition-tests ()
   (nst:def-test can-add-r2 (:equalp (make-r2 :one 1 :x 2 :y 3 :xy 4))

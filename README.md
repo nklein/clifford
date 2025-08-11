@@ -52,7 +52,7 @@ structure have at least one keyword constructor.  For example:
        (:conc-name cl2)
        (:predicate real-cl2-p)
        (:constructor %make-cl2-p)
-       (:constructor make-cl2 (e1 e2 &key (one 0) (e1e2 0)))))
+       (:constructor make-cl2 (one e1 e2 e1e2))))
 
 The `:scalar-zero` option allows one to specify the default
 coefficient for components of the Clifford multivector.  The
@@ -94,16 +94,16 @@ algebra specification to declare a Clifford algebra with
       (:struct-options
         (:conc-name c-)
         (:constructor %make-r11)
-        (:constructor make-r11 (e e* &key (one 0.0) (ee* 0.0))))
+        (:constructor make-r11 (one e e* ee*)))
       (:scalar-type single-float)
       (:quadratic-form (lambda (v) (* 2.0 (first v) (second v)))))
 
 We can now define several multivectors to work with:
 
-    (defparameter e   (make-r11 1.0 0.0))
-    (defparameter e*  (make-r11 0.0 1.0))
-    (defparameter ee* (make-r11 0.0 0.0 :ee* 1.0))
-    (defparameter c1234 (make-r11 2.0 3.0 :one 1.0 :ee* 4.0))
+    (defparameter e     (make-r11 0.0 1.0 0.0 0.0))
+    (defparameter e*    (make-r11 0.0 0.0 1.0 0.0))
+    (defparameter ee*   (make-r11 0.0 0.0 0.0 1.0))
+    (defparameter c1234 (make-r11 1.0 2.0 3.0 4.0))
 
 We can access the components with normal struct accessors.  In this
 case since we used `C-` for the `:conc-name` in the `:struct-options`,
@@ -134,7 +134,7 @@ We can also negate and multiply multivectors:
 
 We can make various comparisons with Clifford multivectors:
 
-    (zerop (make-r11 0.0 0.0)) => T
+    (zerop (make-r11 0.0 0.0 0.0 0.0)) => T
     (zerop e) => NIL
     (= e e)   => T
     (= e e*)  => NIL

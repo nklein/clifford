@@ -2,7 +2,7 @@
 
 (defstruct (algebra-info (:conc-name)
                          (:copier))
-  package
+  algebra-info-package
   name
   scalar-zero
   scalar-type

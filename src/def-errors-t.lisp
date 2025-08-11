@@ -1,4 +1,4 @@
-(in-package #:clifford-tests)
+(in-package #:clifford/test)
 
 (nst:def-criterion (:basis-error (name basis reason) (:form body))
   (handler-case
@@ -24,28 +24,28 @@
 (nst:def-test-group basis-specification-error-tests ()
   (nst:def-test must-specify-basis
       (:basis-error bad-basis nil "Must specify at least one basis vector")
-    (defcliff bad-basis ()))
+    (macroexpand '(defcliff bad-basis ())))
 
   (nst:def-test basis-cannot-repeat
       (:basis-error bad-basis (e e) "Basis cannot have repeated elements")
-    (defcliff bad-basis (e e)))
+    (macroexpand '(defcliff bad-basis (e e))))
 
   (nst:def-test basis-must-be-symbols
       (:basis-error bad-basis (5 (a b c))
                     "Basis elements must be non-keyword symbols or strings")
-    (defcliff bad-basis (5 (a b c))))
+    (macroexpand '(defcliff bad-basis (5 (a b c)))))
 
   (nst:def-test basis-must-not-be-keywords
       (:basis-error bad-basis (:a :b)
                     "Basis elements must be non-keyword symbols or strings")
-    (defcliff bad-basis (:a :b)))
+    (macroexpand '(defcliff bad-basis (:a :b))))
 
   (nst:def-test basis-symbols-not-concat-of-others
       (:basis-error bad-basis (a b ab)
                     "Basis elements cannot be concatenation of other elements")
-    (defcliff bad-basis (a b ab)))
+    (macroexpand '(defcliff bad-basis (a b ab))))
 
   (nst:def-test basis-cannot-contain-one
       (:basis-error bad-basis (one two)
                     "Vector basis cannot contain element \"ONE\"")
-    (defcliff bad-basis (one two))))
+    (macroexpand '(defcliff bad-basis (one two)))))

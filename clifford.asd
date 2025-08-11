@@ -3,9 +3,10 @@
 (asdf:defsystem #:clifford
   :description "Clifford algebra library"
   :author "Patrick Stein <pat@nklein.com>"
-  :version "0.2.20130918"
-  :license "unlicense"
-  :depends-on (:conduit-packages :cl-generic-arithmetic :iterate :anaphora)
+  :version "0.3.20250811"
+  :license "UNLICENSE"
+  :depends-on (:generic-cl.arithmetic :generic-cl.math :generic-cl.comparison :iterate :anaphora)
+  :in-order-to ((asdf:test-op (asdf:test-op :clifford/test)))
   :components ((:static-file "README.md")
                (:static-file "UNLICENSE")
                (:module "src"
@@ -58,12 +59,14 @@
                                                           "accessors"
                                                           "involutions"))))))
 
-(asdf:defsystem #:clifford-tests
+(asdf:defsystem #:clifford/test
   :description "Tests for the Clifford algebra library."
   :author "Patrick Stein <pat@nklein.com>"
-  :version "0.2.20130918"
-  :license "unlicense"
+  :version "0.3.20250811"
+  :license "UNLICENSE"
   :depends-on (#:clifford #:nst)
+  :perform (asdf:test-op (o c)
+                         (uiop:symbol-call :clifford/test :run-tests))
   :components ((:module "src"
                 :components ((:file "package-t")
                              (:file "def-errors-t" :depends-on ("package-t"))
@@ -83,8 +86,3 @@
                                     :depends-on ("package-t" "define-t"))
                              (:file "product-t"
                                     :depends-on ("package-t" "define-t"))))))
-
-(defmethod asdf:perform ((op asdf:test-op)
-                         (system (eql (asdf:find-system :clifford))))
-  (asdf:load-system :clifford-tests)
-  (funcall (find-symbol (symbol-name :run-tests) :clifford-tests)))
